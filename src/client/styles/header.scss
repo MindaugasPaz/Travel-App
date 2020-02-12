@@ -1,0 +1,23 @@
+#header-text{
+    grid-area:hd;
+    border-radius: 10px 10px 0 0;
+    padding-left: 30px;
+    text-align: left;
+    background: rgb(139, 155, 199);
+    color: #fffff8;
+    font-size: 24px;
+    background-size: cover;
+}
+
+.app{
+    display: grid;
+    grid-auto-rows: minmax(150px, auto);
+    /* grid-template-columns:  */
+    height:100vh;
+    background: #f23557;
+    color: #f0d43a;
+    justify-content: center;
+    grid-gap: 1em;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+}

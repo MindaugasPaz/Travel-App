@@ -13,12 +13,12 @@ document.getElementById('generate').addEventListener('click', performAction);
 function performAction(e){
     e.preventDefault();
     const cityName = document.getElementById('zip').value;
-    const feelings = document.getElementById('feelings').value;
+    const tripDate = document.getElementById("start").value;
     console.log(newDate);
     getTemperature(baseURL, cityName, key)
     .then(function (data){
         // Add data to POST request
-        postData('http://localhost:8080/addWeatherData', {latitude: data.postalCodes[0].lat, longitude: data.postalCodes[0].lng, country: data.postalCodes[0].countryCode } )
+        postData('http://localhost:8080/addWeatherData', {latitude: data.postalCodes[0].lat, longitude: data.postalCodes[0].lng, country: data.postalCodes[0].countryCode, tripDate: tripDate } )
         // Function which updates UI
         .then(function() {
             updateUI()

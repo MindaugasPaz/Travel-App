@@ -1,7 +1,7 @@
-document.getElementById('generate').addEventListener('click', x);
+document.getElementById('generate').addEventListener('click', countDown);
 
 // Update the count down every 1 second
-var x = setInterval(function () {
+var countDown = setInterval(function () {
 
     // Get today's date and time
     let today = new Date().getTime();
@@ -20,9 +20,9 @@ var x = setInterval(function () {
 
     // If the count down is over, write some text 
     if (distance < 0) {
-        clearInterval(x);
+        clearInterval(countDown);
         document.getElementById("demo").innerHTML = "EXPIRED";
     }
 }, 1000);
 
-export { x }
+export { countDown }

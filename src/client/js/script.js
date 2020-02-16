@@ -130,6 +130,7 @@ const updateUI = async () => {
         document.getElementById('temp').innerHTML = allData.longitude;
         //calculating to celsius
         document.getElementById('content').innerHTML = (allData.temperature - 32) /1.8;
+        document.getElementById('image').src = allData.pictureURL;
     }
     catch (error) {
         console.log('error', error);

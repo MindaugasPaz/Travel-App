@@ -1,6 +1,3 @@
-// let baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-// let key = '661daa7377189bfe425b6af1f07ac279';
-
 //geonames API
 let coordinatesAPI = 'http://api.geonames.org/postalCodeSearchJSON?placename=';
 let coordinatesKey = '&maxRows=10&username=mindpaz';
@@ -19,33 +16,26 @@ document.getElementById('generate').addEventListener('click', performAction);
 
 function performAction(e){
     e.preventDefault();
-    const cityName = document.getElementById('zip').value;
+    const cityName = document.getElementById('city').value;
     const tripDate = document.getElementById("start").value;
-    let allProjectData = {tripDate: tripDate};
+    let allProjectData = {tripDate: tripDate, cityName: cityName};
     const tripDateUnix = new Date(tripDate).getTime() / 1000;
+    //invoking countdown function
+    const startCountDown = countDown();
     console.log(tripDateUnix, 'trip date in UNIX')
     console.log(newDate);
     getCoordinates(coordinatesAPI, cityName, coordinatesKey)
     .then(function (data){
         allProjectData.latitude = data.postalCodes[0].lat;
         allProjectData.longitude = data.postalCodes[0].lng;
-        // Add data to POST request
-        // postData('http://localhost:8080/addWeatherData', {latitude: data.postalCodes[0].lat, longitude: data.postalCodes[0].lng, tripDate: tripDate } )
-        // Function which updates UI
-        // .then(function() {
-        //     updateUI()
-        // })
+        allProjectData.country = data.postalCodes[0].countryCode;
             getTemperature(allProjectData.latitude, allProjectData.longitude, tripDateUnix)
             .then(function(data){
                 allProjectData.temperature = data.currently.temperature;
-                // postData('http://localhost:8080/addWeatherData', {latitude: data.latitude, longitude: data.longitude, temperature: data.currently.temperature, tripDate: tripDate } )
-                // .then(function(){
                     getPicture(pixabayAPI, cityName)
                     .then(function(data){
                         allProjectData.url = data.hits[0].webformatURL;
                         console.log('kazkas', data);
-                        // postData('http://localhost:8080/addPicData', {url: data.hits[0].webformatURL})
-                        // .then(function() {
                             postData('http://localhost:8080/addWeatherData', allProjectData)
                             .then(function(){
                                 updateUI()
@@ -60,11 +50,9 @@ function performAction(e){
 // Async GET coordinates
 const getCoordinates = async (coordinatesAPI, city, coordinatesKey)=>{
     const response = await fetch(coordinatesAPI + city + coordinatesKey)
-    // console.log(response);
     try {
         const data = await response.json();
         console.log('cia', data);
-        console.log('PIRMAS');
         return data;
     }
     catch(error) {
@@ -74,8 +62,6 @@ const getCoordinates = async (coordinatesAPI, city, coordinatesKey)=>{
 
 // Async GET temperature
 const getTemperature = async (lat, lng, tripDateUnix)=>{
-    // const response = await fetch('http://localhost:8080/all')
-    // const allData = await response.json();
     try {
         const weather = await fetch(weatherAPI + lat +',' + lng + ',' + tripDateUnix);
         const data = await weather.json();
@@ -120,16 +106,38 @@ const postData = async (url = '', data = {}) => {
     }
 }
 
+// Countdown how many days till trip
+function countDown() {
+    // Get today's date and time
+    let today = new Date().getTime();
+    // let today = d.toLocaleString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' });
+    const date = document.getElementById("start").value;
+
+    const tripDate = new Date(date).getTime();
+    // Find the distance between now and the count down date
+    var distance = tripDate - today;
+    const diffDays = Math.ceil(distance / (1000 * 60 * 60 * 24));
+    console.log(diffDays);
+
+    // Output the result in an element with id="demo"
+    document.getElementById("demo").innerHTML = diffDays + ' days till your trip';
+
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(countDown);
+        document.getElementById("demo").innerHTML = "EXPIRED";
+    }
+}
+
 // Update user interface
 const updateUI = async () => {
     const request = await fetch('http://localhost:8080/all');
     try {
         const allData = await request.json();
-        console.log('TRECIAS');
-        document.getElementById('date').innerHTML = allData.latitude;
-        document.getElementById('temp').innerHTML = allData.longitude;
+        document.getElementById('destination').innerHTML = 'Your trip to ' + allData.cityName + ', ' + allData.country + ' on ' + allData.tripDate;
+        // document.getElementById('country').innerHTML =  + 
         //calculating to celsius
-        document.getElementById('content').innerHTML = (allData.temperature - 32) /1.8;
+        document.getElementById('temperature').innerHTML = (allData.temperature - 32) / 1.8;
         document.getElementById('image').src = allData.pictureURL;
     }
     catch (error) {

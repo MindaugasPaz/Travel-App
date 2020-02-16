@@ -25,4 +25,4 @@ var countDown = setInterval(function () {
     }
 }, 1000);
 
-export { countDown }
+// export { countDown }

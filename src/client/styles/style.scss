@@ -2,83 +2,96 @@ body{
     background: #fffff8;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
-#headerBox {
-    grid-area:hd;
+
+.header-text{
     border-radius: 10px 10px 0 0;
-    padding-left: 30px;
+    // padding-left: 30px;
     text-align: left;
-    background: rgb(152, 158, 175);
-    color: #fffff8;
+    background: #659DBD;
+    // color: #659DBD;
     font-size: 24px;
     background-size: cover;
 }
 
 #app{
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
+    border-radius: 10px 10px 0 0;
+    // grid-auto-rows: minmax(150px, auto);
     /* grid-template-columns:  */
     height:100vh;
-    background: #f23557;
-    color: #f0d43a;
+    // width: 80vh;
+    background: #659DBD;
+    color: #ffffff;
     justify-content: center;
     grid-gap: 1em;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
 }
 
-.holder{
-
+.output{
+    // margin: auto;
+    // border: solid rgb(236, 233, 233) 2px;
+    // background: #DAAD86;
+    // justify-content: center;
 }
 
-.entry{
-    background: rgba(59, 74, 107, .4);
+img {
+    border-radius: 7px 7px 7px 7px;
+    margin-right: 20px;
+    max-height: 100%;
+    max-width: 100%; 
+    display: block;
 }
 
-#entryHolder{
-
+#info{
+    margin-left: 20px;
 }
 
-.date{
-
-}
-
-#temp{
-
-}
-
-#content{
-
-}
-
-.headline {
-
-}
-.title{
-
-}
+// .entry{
+//     background: rgba(59, 74, 107, .4);
+// }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
-label{
-    display:block;
-    font-size: 27px;
+// label{
+//     display:block;
+//     font-size: 27px;
+// }
+.topLabelCity {
+    display: block;
+}
+
+.topLabelDate {
+    display: block;
+}
+
+.output {
+    display: flex;
 }
 
 input{
-    display:block;
+    // display:block;
     height: 60px;
-    width: 320px;
-    background:#22b2da;
-    color: #f0d43a;
+    width: 200px;
+    background:#DAAD86;
+    border-radius: 5px 5px 5px 5px;
+    color: #ffffff;
     font-size: 20px;
     font-family: 'Oswald', sans-serif;
     border: none;
 }
 
+.entries{
+    display: flex;
+    gap: 10px;
+    // flex-wrap: nowrap;
+}
+
 button{
-    width: 400px;
-    height: 100px;
+    display: block;
+    width: 150px;
+    height: 60px;
     background: #3b4a6b;
-    color: #f0d43a;
+    color: #ffffff;
     font-size: 26px;
     font-family: 'Oswald', sans-serif;
     border: none;
@@ -88,14 +101,8 @@ h1{
     font-size: 36px;
 }
 
-textarea{
-    background:#22b2da;
-    color: #f0d43a;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
 /* Reset style for HTML element on active to have no border*/
-input:focus,
+// input:focus,
 select:focus,
 textarea:focus,
 button:focus {
@@ -103,7 +110,7 @@ button:focus {
 }
 /* Style for Placeholder Text*/
 ::placeholder { /* Firefox, Chrome, Opera */ 
-    color: #f0d43a; 
+    color: #ffffff; 
     font-family: 'Oswald', sans-serif;
 
 } 

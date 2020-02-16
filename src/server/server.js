@@ -48,8 +48,9 @@ function addData(request, response) {
     projectData.longitude = request.body.longitude;
     projectData.temperature = request.body.temperature;
     projectData.tripDate = request.body.tripDate;
+    projectData.cityName = request.body.cityName;
     projectData.pictureURL = request.body.url;
-    // projectData.country = request.body.country;
+    projectData.country = request.body.country;
     response.end();
     console.log(projectData)
 }

@@ -1,6 +1,5 @@
 // Setup empty JS object to act as endpoint for all routes
 projectData = {};
-pictureData = {};
 
 // Require Express to run server and routes
 const express = require('express');
@@ -47,25 +46,11 @@ function addData(request, response) {
     projectData.latitude = request.body.latitude;
     projectData.longitude = request.body.longitude;
     projectData.temperature = request.body.temperature;
-    projectData.tripDate = request.body.tripDate;
+    projectData.tripStartDate = request.body.tripStartDate;
+    projectData.tripEndDate = request.body.tripEndDate;
     projectData.cityName = request.body.cityName;
     projectData.pictureURL = request.body.url;
     projectData.country = request.body.country;
     response.end();
     console.log(projectData)
-}
-
-app.get('/pictureURL', sendPicData)
-
-function sendPicData (request, response) {
-    response.send(pictureData)
-}
-
-// POST route
-app.post('/addPicData', addPicData)
-
-function addPicData(request, response) {
-    pictureData.url = request.body.url;
-    response.end();
-    console.log(pictureData)
 }

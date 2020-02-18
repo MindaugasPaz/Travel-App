@@ -68,6 +68,14 @@ img {
     display: flex;
 }
 
+.hidden{
+    visibility: hidden;
+}
+
+.visible{
+    visibility: visible;
+}
+
 input{
     // display:block;
     height: 60px;
@@ -80,10 +88,17 @@ input{
     border: none;
 }
 
-.entries{
+.row {
     display: flex;
-    gap: 10px;
-    // flex-wrap: nowrap;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.inputs {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: auto;
 }
 
 button{

@@ -11,7 +11,9 @@ let pixabayAPI = 'https://pixabay.com/api/?key=15273121-5e9553185566e2219c94b636
 let d = new Date();
 let newDate = d.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-document.getElementById('generate').addEventListener('click', performAction);
+if(document.getElementById('generate')){
+    document.getElementById('generate').addEventListener('click', performAction)
+}
 
 function performAction(e){
     e.preventDefault();
@@ -25,7 +27,7 @@ function performAction(e){
     //invoking countdown function
     const startCountDown = countDown();
     //invoking duration function
-    const StartTripDuration = tripDuration();
+    const StartTripDuration = tripDuration(tripStartDate, tripEndDate);
     console.log(tripDateUnix, 'trip date in UNIX')
     console.log(newDate);
     getCoordinates(coordinatesAPI, cityName, coordinatesKey)
@@ -54,6 +56,7 @@ const getCoordinates = async (coordinatesAPI, city, coordinatesKey)=>{
     const response = await fetch(coordinatesAPI + city + coordinatesKey)
     try {
         const data = await response.json();
+        console.log(data);
         return data;
     }
     catch(error) {
@@ -126,10 +129,8 @@ function countDown() {
     }
 }
 
-function tripDuration() {
+function tripDuration(startDate, endDate) {
     // let today = d.toLocaleString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' });
-    const startDate = document.getElementById("start").value;
-    const endDate = document.getElementById("end").value;
 
     const tripStartDate = new Date(startDate).getTime();
     const tripEndDate = new Date(endDate).getTime();
@@ -139,14 +140,19 @@ function tripDuration() {
     console.log(diffDays);
 
     // Output the result in an element with id="demo"
-    document.getElementById("duration").innerHTML = ' Your trip duration is ' + diffDays + ' days ';
+    if(document.getElementById("duration")){
+        document.getElementById("duration").innerHTML = ' Your trip duration is ' + diffDays + ' days '
+    };
 
     // If the count down is over, write some text 
     if (distance < 0) {
         clearInterval(countDown);
         document.getElementById("duration").innerHTML = "EXPIRED";
     }
+    return (diffDays);
 }
+
+module.exports = tripDuration;
 
 // Update user interface
 const updateUI = async () => {
@@ -162,5 +168,3 @@ const updateUI = async () => {
         console.log('error', error);
     }
 }
-
-export { performAction }

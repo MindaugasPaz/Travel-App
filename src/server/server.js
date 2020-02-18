@@ -36,7 +36,7 @@ function listening(){
 app.get('/all', sendData)
 
 function sendData (request, response) {
-    response.send(projectData)
+    response.json(projectData)
 }
 
 // POST route
@@ -51,6 +51,7 @@ function addData(request, response) {
     projectData.cityName = request.body.cityName;
     projectData.pictureURL = request.body.url;
     projectData.country = request.body.country;
-    response.end();
+    response.json(projectData);
     console.log(projectData)
 }
+module.exports = app;

@@ -7,7 +7,7 @@
 This is the final project of Udacity Front end Nanodegree program. It is a single page application. After submitting city's name, trip's start date and trip's end date application is calling three different APIs:
 - Geonames - to receive coordinatios of the city
 - DarkSky - to receice temperature data
-= Pixabay - to reiceive picture which is realted to the city
+- Pixabay - to reiceive picture which is realted to the city
 
 ## Project Dependencies
 

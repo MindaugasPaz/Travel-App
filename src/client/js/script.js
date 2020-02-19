@@ -21,15 +21,12 @@ function performAction(e){
     const tripStartDate = document.getElementById("start").value;
     const tripEndDate = document.getElementById("end").value;
     const visibleOutput = document.querySelector(".hidden");
-    console.log(visibleOutput);
     let allProjectData = {tripStartDate: tripStartDate, cityName: cityName, tripEndDate: tripEndDate};
     const tripDateUnix = new Date(tripStartDate).getTime() / 1000;
     //invoking countdown function
-    const startCountDown = countDown();
+    const startCountDown = countDown(tripStartDate);
     //invoking duration function
     const StartTripDuration = tripDuration(tripStartDate, tripEndDate);
-    console.log(tripDateUnix, 'trip date in UNIX')
-    console.log(newDate);
     getCoordinates(coordinatesAPI, cityName, coordinatesKey)
     .then(function (data){
         allProjectData.latitude = data.postalCodes[0].lat;
@@ -41,7 +38,6 @@ function performAction(e){
                 getPicture(pixabayAPI, cityName)
                     .then(function (data) {
                         allProjectData.url = data.hits[0].webformatURL;
-                        console.log('kazkas', data);
                         postData('http://localhost:8080/addWeatherData', allProjectData)
                             .then(function () {
                                 updateUI() && visibleOutput.classList.add("visible")
@@ -56,7 +52,6 @@ const getCoordinates = async (coordinatesAPI, city, coordinatesKey)=>{
     const response = await fetch(coordinatesAPI + city + coordinatesKey)
     try {
         const data = await response.json();
-        console.log(data);
         return data;
     }
     catch(error) {
@@ -107,17 +102,14 @@ const postData = async (url = '', data = {}) => {
 }
 
 // Countdown how many days till trip
-function countDown() {
+function countDown(tripStartDate) {
     // Get today's date and time
     let today = new Date().getTime();
-    // let today = d.toLocaleString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' });
-    const date = document.getElementById("start").value;
 
-    const tripDate = new Date(date).getTime();
+    const tripDate = new Date(tripStartDate).getTime();
     // Find the distance between now and the count down date
     var distance = tripDate - today;
     const diffDays = Math.ceil(distance / (1000 * 60 * 60 * 24));
-    console.log(diffDays);
 
     // Output the result in an element with id="demo"
     document.getElementById("countdown").innerHTML = diffDays + ' days till your trip';
@@ -130,14 +122,11 @@ function countDown() {
 }
 
 function tripDuration(startDate, endDate) {
-    // let today = d.toLocaleString('en-GB', { year: 'numeric', month: 'numeric', day: 'numeric' });
-
     const tripStartDate = new Date(startDate).getTime();
     const tripEndDate = new Date(endDate).getTime();
     // Find the distance between now and the count down date
     var distance = tripEndDate - tripStartDate;
     const diffDays = Math.ceil(distance / (1000 * 60 * 60 * 24));
-    console.log(diffDays);
 
     // Output the result in an element with id="demo"
     if(document.getElementById("duration")){
@@ -161,7 +150,8 @@ const updateUI = async () => {
         const allData = await request.json();
         document.getElementById('destination').innerHTML = 'Your trip to ' + allData.cityName + ', ' + allData.country + ' on ' + allData.tripStartDate;
         //calculating to celsius
-        document.getElementById('temperature').innerHTML = (allData.temperature - 32) / 1.8;
+        // document.getElementById('temperature').innerHTML = (allData.temperature - 32) / 1.8;
+        document.getElementById('temperature').innerHTML = allData.temperature;
         document.getElementById('image').src = allData.pictureURL;
     }
     catch (error) {

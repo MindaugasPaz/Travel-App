@@ -1,0 +1,35 @@
+@media(max-width:320px) {
+    .topLabelCity {
+        margin: 5px;
+    }
+    .topLabelStart {
+        margin: 5px;
+    }
+    .topLabelEnd {
+        margin: 5px;
+    }
+    .output {
+        display: block;
+    }
+}
+@media(min-width: 321px) and (max-width: 965px) {
+    .topLabelCity {
+        margin: 5px;
+    }
+    .topLabelStart {
+        margin: 5px;
+    }
+    .topLabelEnd {
+        margin: 5px;
+    }
+}
+
+@media(min-width: 320px) and (max-width: 600px) {
+    .output {
+        display: block;
+    }
+}
+
+@media(min-width: 965px) {
+
+}

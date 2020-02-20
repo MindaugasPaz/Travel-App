@@ -1,11 +1,8 @@
 //geonames API
 let coordinatesAPI = 'http://api.geonames.org/postalCodeSearchJSON?placename=';
-let coordinatesKey = '&maxRows=10&username=mindpaz';
+// let coordinatesKey = '&maxRows=10&username=mindpaz';
 
-//darkSky API
-let weatherAPI = 'https://api.darksky.net/forecast/b144ed645a10cba2f973e8ab02fd4d24/';
-
-let pixabayAPI = 'https://pixabay.com/api/?key=15273121-5e9553185566e2219c94b636e&q=';
+let pixabayAPI = 'https://pixabay.com/api/?key=' + process.env.pixabayKey;
 
 // Create a new date instance dynamically with JS
 let d = new Date();
@@ -27,12 +24,12 @@ function performAction(e){
     const startCountDown = countDown(tripStartDate);
     //invoking duration function
     const StartTripDuration = tripDuration(tripStartDate, tripEndDate);
-    getCoordinates(coordinatesAPI, cityName, coordinatesKey)
+    getCoordinates(coordinatesAPI, cityName, process.env.coordinatesKey)
     .then(function (data){
         allProjectData.latitude = data.postalCodes[0].lat;
         allProjectData.longitude = data.postalCodes[0].lng;
         allProjectData.country = data.postalCodes[0].countryCode;
-        getTemperature(allProjectData.latitude, allProjectData.longitude, tripDateUnix)
+        getTemperatureAPI(allProjectData.latitude, allProjectData.longitude, tripDateUnix)
             .then(function (data) {
                 allProjectData.temperature = data.currently.temperature;
                 getPicture(pixabayAPI, cityName)
@@ -59,10 +56,10 @@ const getCoordinates = async (coordinatesAPI, city, coordinatesKey)=>{
     }
 }
 
-// Async GET temperature
-const getTemperature = async (lat, lng, tripDateUnix)=>{
+//from server side
+const getTemperatureAPI = async (lat, lng, tripDateUnix)=>{
     try {
-        const weather = await fetch(weatherAPI + lat +',' + lng + ',' + tripDateUnix);
+        const weather = await fetch('http://localhost:8080/callWeatherAPI?latitude=' + lat + '&longitude=' + lng + '&date=' + tripDateUnix);
         const data = await weather.json();
         return data;
     }

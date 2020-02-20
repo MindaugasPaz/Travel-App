@@ -11,7 +11,7 @@ This is the final project of Udacity Front end Nanodegree program. It is a singl
 
 ## Project Dependencies
 
-The ‘cors’ package should be installed in the project from the command line, required in the project file server.js, and the instance of the app should be setup to use cors().
+The ‘cors’ package should be installed in the project from the command line, required in the project file server.js, and the instance of the app should be setup to use cors().+
 
 The body-parser package should be installed and included in the project.
 
@@ -29,3 +29,7 @@ This project has implemented service workers
 
 - Download the project .zip file to you computer and unzip the file or clone this repository to your desktop.
 - In terminal please run command `npm run build-prod` and after successful build please run command `npm start`
+
+## Additional feature in this project
+
+Added feature to count and display trip duration on UI. User needs to enter start and end date of the trip and application will count how long his trip will be.

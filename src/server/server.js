@@ -3,6 +3,7 @@ projectData = {};
 
 // Require Express to run server and routes
 const express = require('express');
+const https = require('https');
 
 // Start up an instance of app
 const app = express();
@@ -33,14 +34,14 @@ function listening(){
 };
 
 //GET route that returns the projectData object
-app.get('/all', sendData)
+app.get('/all', sendData);
 
 function sendData (request, response) {
-    response.json(projectData)
+    response.json(projectData);
 }
 
 // POST route
-app.post('/addWeatherData', addData)
+app.post('/addWeatherData', addData);
 
 function addData(request, response) {
     projectData.latitude = request.body.latitude;
@@ -55,3 +56,48 @@ function addData(request, response) {
     console.log(projectData)
 }
 module.exports = app;
+
+app.get('/callWeatherAPI', sendWeatherData);
+
+async function sendWeatherData (request, response) {
+    const latitude = request.query.latitude;
+    const longitude = request.query.longitude;
+    const tripDate = request.query.date;
+    let temperature = await callExternalAPI(latitude, longitude, tripDate)
+        .then( (data) => {
+            return data;
+        })
+        .catch((e) => {
+            console.log('error', e)
+        })
+    response.json(temperature);
+}
+
+function callExternalAPI(lat, lng, date) {
+    return new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'api.darksky.net',
+            port: 443,
+            path: '/forecast/b144ed645a10cba2f973e8ab02fd4d24/' + lat + ',' + lng + ',' + date,
+            method: 'GET'
+        }
+
+        const req = https.request(options, res => {
+            console.log(`statusCode: ${res.statusCode}`)
+            let data = '';
+            // (string concatination) adding response to string until stream is over
+            res.on('data', chunk => {
+                data += chunk;
+            })
+            res.on('end', () => {
+                try {
+                    data = JSON.parse(data);
+                } catch(e) {
+                    reject(e);
+                }
+                resolve(data);
+            })
+        })
+        req.end();
+    }
+)}

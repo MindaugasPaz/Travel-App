@@ -1,9 +1,9 @@
-body{
+body {
     background: #fffff8;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.header-text{
+.header-text {
     border-radius: 10px 10px 0 0;
     text-align: left;
     background: #659DBD;
@@ -11,7 +11,7 @@ body{
     background-size: cover;
 }
 
-#app{
+#app {
     display: grid;
     border-radius: 10px 10px 0 0;
     height:100vh;
@@ -24,7 +24,7 @@ body{
     overflow: auto;
 }
 
-.output{
+.output {
     // margin: auto;
     // border: solid rgb(236, 233, 233) 2px;
     // background: #DAAD86;
@@ -39,7 +39,7 @@ img {
     display: block;
 }
 
-#info{
+#info {
     margin-left: 20px;
 }
 
@@ -55,7 +55,7 @@ img {
     display: flex;
 }
 
-.hidden{
+.hidden {
     visibility: hidden;
 }
 
@@ -63,7 +63,7 @@ img {
     visibility: visible;
 }
 
-input{
+input {
     height: 60px;
     width: 200px;
     background:#DAAD86;
@@ -87,7 +87,7 @@ input{
     margin: auto;
 }
 
-button{
+button {
     display: block;
     width: 150px;
     height: 60px;
@@ -98,6 +98,12 @@ button{
     border: none;
     box-shadow: 2px 4px 5px #444;
 }
+
+.button:hover {
+    background: white;
+    color: #3b4a6b;
+}
+
 h1{
     font-size: 36px;
 }

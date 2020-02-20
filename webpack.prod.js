@@ -30,6 +30,10 @@ module.exports = {
             filename: "./index.html",
         }),
         new WorkboxPlugin.GenerateSW(),
-        new MiniCssExtractPlugin({filename: '[name].css'})
+        new MiniCssExtractPlugin({filename: '[name].css'}),
+        new webpack.DefinePlugin({
+            "process.env.coordinatesKey": JSON.stringify('&maxRows=10&username=mindpaz'),
+            "process.env.pixabayKey": JSON.stringify('15273121-5e9553185566e2219c94b636e&q=')
+          })
     ]
 }
